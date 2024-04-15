@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import com.example.demo.domain.Song;
 import com.example.demo.dto.request.SongRequest;
+import com.example.demo.exception.NotFoundException;
 import com.example.demo.mapper.SongMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -24,7 +25,9 @@ public class SongServiceImpl implements SongService {
     @Override
     public Song updateSong(Long id, SongRequest req) {
         Song songById = findSongById(id);
-        if(songById == null) throw new IllegalArgumentException("Song not found");
+        if(songById == null) throw new NotFoundException("SONG");
+        if(songById.getLyrics().equals(req.getLyrics())&&
+        songById.getTitle().equals(req.getTitle())) return songById;
         Song entity = req.toEntity(id);
         songMapper.updateSong(entity);
 
