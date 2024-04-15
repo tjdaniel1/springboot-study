@@ -11,10 +11,6 @@ import java.util.Iterator;
 
 @SpringBootApplication
 public class DemoApplication {
-	@Bean
-	public int testIndex(){
-		return 1;
-	}
 
 	public static void main(String[] args) {
 		ConfigurableApplicationContext run = SpringApplication.run(DemoApplication.class, args);
@@ -23,9 +19,4 @@ public class DemoApplication {
 //		while (beanNamesIterator.hasNext())
 //			System.out.println(beanNamesIterator.next());
 	}
-
-}
-@Component
-class MyTest{
-
 }
