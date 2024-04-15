@@ -26,8 +26,8 @@ public class SongServiceImpl implements SongService {
     public Song updateSong(Long id, SongRequest req) {
         Song songById = findSongById(id);
         if(songById == null) throw new NotFoundException("SONG");
-        if(songById.getLyrics().equals(req.getLyrics())&&
-        songById.getTitle().equals(req.getTitle())) return songById;
+        if(songById.getLyrics().equals(req.lyrics())&&
+        songById.getTitle().equals(req.title())) return songById;
         Song entity = req.toEntity(id);
         songMapper.updateSong(entity);
 
@@ -42,6 +42,11 @@ public class SongServiceImpl implements SongService {
     @Override
     public Song findSongById(Long id) {
         return songMapper.findSongById(id);
+    }
+
+    @Override
+    public List<Song> findSongByQuery(String query) {
+        return songMapper.findSongByQuery("%" + query + "%");
     }
 }
 

@@ -16,18 +16,27 @@ import java.util.List;
 public class SongController {
     private final SongService songService;
 
+    @GetMapping
+    public List<Song> getAllSongsByQuery(@RequestParam(
+            value= "query" ,
+            required = false,
+            defaultValue = ""
+    ) String query){
+        return songService.findSongByQuery(query);
+    }
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public void saveSong(@RequestBody SongRequest req){
         songService.save(req);
     }
 
-    @GetMapping
-    public List<Song> getAll(){
-        return songService.findAllSongs();
-    }
+//    @GetMapping
+//    public List<Song> getAll(){
+//        return songService.findAllSongs();
+//    }
 
-    @GetMapping("/{id")
+    @GetMapping("/{id}")
     public Song getSongById(@PathVariable("id") long id){
         return songService.findSongById(id);
     }

@@ -3,6 +3,23 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.demo.mapper.SongMapper">
+    <select id="findSongByQuery">
+        select
+            song_id as id,
+            song_title as title,
+            song_lyrics as lyrics,
+            song_created_at as createAt
+        from
+            songs
+        <where>
+            <if test="query != '%%'">
+                    song_title like #{query} or
+            </if>
+            <if test="query != '%%'">
+                    song_lyrics like #{query}
+            </if>
+        </where>
+    </select>
     <!--
         ep : /api/v1/songs
         method : POST
@@ -11,5 +28,43 @@
         insert into songs(song_title, song_lyrics)
         values (#{title},#{lyrics})
     </insert>
+    <select id="findAllSong">
+        select
+            song_id as id,
+            song_title as title,
+            song_lyrics as lyrics,
+            song_created_at as createAt
+        from
+            songs
+    </select>
+    <delete id="deleteSong">
+        delete from songs where song_id = #{id}
+    </delete>
+    <update id="updateSong">
+        update
+            songs
+        <set>
+            <if test="title != null and title != ''">
+                song_title = #{title},
+            </if>
+            <if test="lyrics != null and lyrics != '' ">
+                song_lyrics = #{lyrics}
+            </if>
+        </set>
+        where
+            song_id = #{id}
+    </update>
+    <select id="findSongById">
+        select
+            song_id as id,
+            song_title as title,
+            song_lyrics as lyrics,
+            song_created_at as createAt
+        from
+            songs
+        where
+            song_id = #{id}
+    </select>
+
 
 </mapper>

@@ -11,5 +11,6 @@ public interface SongService {
     Song updateSong(Long id, SongRequest req);
     void deleteSong(Long id);
     Song findSongById(Long id);
+    List<Song> findSongByQuery(String query);
 
 }
